@@ -77,7 +77,7 @@ public:
 };
 
 class LFUCache {
-    int capacity_;
+    uint64_t capacity_;
 
     using KEY = int64_t;
     using LFU = uint64_t;
@@ -94,7 +94,8 @@ class LFUCache {
             recent.insert(std::pair{bumped->lfu, LFU_SingleFrequency()});
         recent.at(bumped->lfu).AddNode(bumped);
     }
-    int pop() {
+    
+    int64_t pop() {
         if(capacity_ != 0){
             --capacity_;
             return -1;
@@ -114,10 +115,11 @@ class LFUCache {
         }
         return returnedKey;
     }
+
 public:
-    LFUCache(int capacity) : capacity_(capacity) {}
+    LFUCache(uint64_t capacity) : capacity_(capacity) {}
     
-    int get(int key) {
+    int get(int64_t key) {
         if(mp.find(key) == mp.end())
             return -1;
         
