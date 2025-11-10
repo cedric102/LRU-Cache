@@ -6,7 +6,7 @@ struct Node {
     Node* next = nullptr;
     int64_t key = -1;
     int64_t value = -1;
-    int64_t lfu = 0;
+    uint64_t lfu = 0;
 };
 
 class LFU_SingleFrequency {
@@ -24,7 +24,6 @@ class LFU_SingleFrequency {
         for(auto curr = tail ; head != curr; curr = curr->next){
             cout << curr->value << " ; ";
         }
-        
     }
 
 public:
@@ -80,8 +79,8 @@ public:
 class LFUCache {
     int capacity_;
 
-    using KEY = int;
-    using LFU = int;
+    using KEY = int64_t;
+    using LFU = uint64_t;
     std::unordered_map<KEY, Node*> mp;
     std::map<LFU, LFU_SingleFrequency> recent;
 
