@@ -5,9 +5,9 @@
 struct Node {
     std::shared_ptr<Node> prev = nullptr;
     std::shared_ptr<Node> next = nullptr;
-    int key = -1;
-    int value = -1;
-    int lfu = 0;
+    int64_t key = -1;
+    int64_t value = -1;
+    uint64_t lfu = 0;
 };
 
 class LFU_SingleFrequency {
@@ -81,8 +81,8 @@ public:
 class LFUCache {
     int capacity_;
 
-    using KEY = int;
-    using LFU = int;
+    using KEY = int64_t;
+    using LFU = uint64_t;
     std::unordered_map<KEY, std::shared_ptr<Node>> mp;
     std::map<LFU, LFU_SingleFrequency> recent;
 
@@ -119,7 +119,7 @@ class LFUCache {
 public:
     LFUCache(int capacity) : capacity_(capacity) {}
     
-    int get(int key) {
+    int get(int64_t key) {
         if(mp.find(key) == mp.end())
             return -1;
         
@@ -130,7 +130,7 @@ public:
         return bumped->value;
     }
     
-    void put(int key, int value) {
+    void put(int64_t key, uint64_t value) {
         if(mp.find(key) != mp.end()){
             auto bumped = mp.at(key);
             bumped->value = value;
